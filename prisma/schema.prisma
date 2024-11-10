@@ -12,3 +12,24 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Truck {
+  id    Int     @id @default(autoincrement())
+  model   String  
+  licensePlate String @unique
+  capacity  Int 
+  status  String @default("available")
+  currentLocation String?
+  trips Trip[]
+}
+
+model Trip {
+  id Int @id @default(autoincrement())
+  startLocation String
+  endLocation String
+  distance Float
+  date DateTime @default(now())
+  status String @default("pending")
+  truckId Int
+  truck Truck @relation(fields: [truckId], references: [id])
+}
