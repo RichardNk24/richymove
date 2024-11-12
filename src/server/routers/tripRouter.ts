@@ -53,6 +53,13 @@ updateTripStatus: publicProcedure.input(z.object({
         },
     });
 }),
-
+// delete a trip from the database
+deleteTrip: publicProcedure.input(z.object({
+    id: z.string(),
+})).mutation((async ({ input }) => {
+    return prisma.trip.delete({
+        where: { id: input.id },
+    });
+})),
 
 });
