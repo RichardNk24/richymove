@@ -37,4 +37,22 @@ export const tripRouter = router({
         },
     });
 }),
-})
+//update an existing trip's status details
+updateTripStatus: publicProcedure.input(z.object({
+    id: z.string(),
+    status: z.string(),
+    endLocation: z.string().optional(),
+    distance: z.number().optional(),
+})).mutation(async ({ input }) => {
+    return prisma.trip.update({
+        where: { id: input.id },
+        data: {
+            status: input.status,
+            endLocation: input.endLocation,
+            distance: input.distance,
+        },
+    });
+}),
+
+
+});
